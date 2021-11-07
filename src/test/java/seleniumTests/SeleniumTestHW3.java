@@ -41,8 +41,8 @@ public class SeleniumTestHW3 {
     public void wikipediaTest() {
         logger.info("Open Wikipedia main page");
         Assert.assertEquals(
-                "Welcome to Wikipedia,",
-                webDriver.findElement(By.xpath("//div[@id='mp-welcome']")).getText());
+                "Wikipedia, the free encyclopedia",
+                webDriver.getTitle());
 
         webDriver.findElement(By.xpath("//a[@title='Portal:Geography']")).click();
         logger.info("Open link: https://en.wikipedia.org/wiki/Portal:Geography");
@@ -56,6 +56,13 @@ public class SeleniumTestHW3 {
         Assert.assertEquals(
                 "The History Portal",
                 webDriver.findElement(By.xpath("//span[@id='The_History_Portal']")).getText());
+        webDriver.navigate().back();
+
+        webDriver.findElement(By.xpath("//a[@title='Portal:Science']")).click();
+        logger.info("Open link: https://en.wikipedia.org/wiki/Portal:Science");
+        Assert.assertEquals(
+                "Science portal",
+                webDriver.findElement(By.xpath("//span[@id='Science_portal']")).getText());
         webDriver.navigate().back();
 
         List<WebElement> elements = webDriver.findElements(By.xpath("//ul[@id='mp-portals']/li"));
