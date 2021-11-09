@@ -56,15 +56,26 @@ public class SeleniumTestHW4 {
         logger.info("Number of converter banks: " + bankElements.size());
         Assert.assertEquals(bankElements.size(), 52);
 
+        int amount = 456;
         webDriver.findElement(By.cssSelector("#converter_currency")).click();
         webDriver.findElement(By.cssSelector("#converter_currency > option:nth-child(2)")).click();
         logger.info("Choose EURO value");
-        webDriver.findElement(By.cssSelector("#currency_amount")).sendKeys("456");
+        webDriver.findElement(By.cssSelector("#currency_amount")).sendKeys(String.valueOf(amount));
         logger.info("Input amount");
+
+        String rateUah = webDriver.findElement(By.xpath("//p[@id='UAH']//input[@id='currency_rate']"))
+                .getAttribute("value");
+        double rateUahDouble = Double.parseDouble(rateUah);
+        double sum = amount * rateUahDouble;
+        String expectedExchangeUah = String.valueOf(sum).substring(0, 8);
+        logger.info("Expected exchange result");
+        String actualExchangeUah = webDriver.findElement(By.xpath("//p[@id='UAH']//input[@id='currency_exchange']"))
+                .getAttribute("value").replaceAll(" ", "");
+        Assert.assertEquals(expectedExchangeUah, actualExchangeUah);
 
         webDriver.findElement(By.xpath("//a[text()='Черный рынок']")).click();
         logger.info("Open 'Черный рынок'");
         Assert.assertEquals(
                 "Черный рынок валют", webDriver.findElement(By.xpath("//h1")).getText());
-        }
     }
+}
