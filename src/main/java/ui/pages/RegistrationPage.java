@@ -67,6 +67,9 @@ public class RegistrationPage extends MainPage{
     @FindBy(id = "submitAccount")
     public WebElement submitButtonAccount;
 
+    @FindBy(xpath = "//div[@class='alert alert-danger']")
+    public WebElement errorMessage;
+
     /**
      * Method click to SingIn page
      * */
@@ -132,5 +135,9 @@ public class RegistrationPage extends MainPage{
 
     public void clickToButtonSubmitAccount() {
         webElements.clickOnElement(submitButtonAccount);
+    }
+
+    public String checkErrorMessage() {
+        return errorMessage.getText();
     }
 }
