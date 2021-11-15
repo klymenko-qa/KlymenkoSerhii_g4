@@ -69,6 +69,9 @@ public class RegistrationPage extends MainPage{
     @FindBy(id = "submitAccount")
     public WebElement submitButtonAccount;
 
+    @FindBy(xpath = "//div[@class='alert alert-danger']")
+    public WebElement errorMessage;
+
     /**
      * Method click to SingIn page
      * */
@@ -113,8 +116,7 @@ public class RegistrationPage extends MainPage{
     }
 
     public void inputCity(String city) {
-        cityField.clear();
-        cityField.sendKeys(city);
+        webElements.inputText(cityField, city);
     }
 
     public void selectState(int index) {
@@ -124,21 +126,22 @@ public class RegistrationPage extends MainPage{
     }
 
     public void inputPostCode(String postCode) {
-        postCodeField.clear();
-        postCodeField.sendKeys(postCode);
+        webElements.inputText(postCodeField, postCode);
     }
 
     public void inputMobilePhone(String phone) {
-        phoneMobile.clear();
-        phoneMobile.sendKeys(phone);
+        webElements.inputText(phoneMobile, phone);
     }
 
     public void inputAliasAddress(String alias) {
-        aliasField.clear();
-        aliasField.sendKeys(alias);
+        webElements.inputText(aliasField, alias);
     }
 
     public void clickToButtonSubmitAccount() {
-        submitButtonAccount.click();
+        webElements.clickOnElement(submitButtonAccount);
+    }
+
+    public String checkErrorMessage() {
+        return errorMessage.getText();
     }
 }
