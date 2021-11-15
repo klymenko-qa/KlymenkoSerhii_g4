@@ -1,5 +1,6 @@
 package baseTest;
 
+import com.github.javafaker.Faker;
 import org.apache.log4j.Logger;
 import org.junit.After;
 import org.junit.Before;
@@ -15,7 +16,8 @@ import java.util.concurrent.TimeUnit;
 public class BaseTests {
 
     private WebDriver webDriver;
-    private Logger logger = Logger.getLogger(getClass());;
+    private Logger logger = Logger.getLogger(getClass());
+    public Faker faker = new Faker();
 
     public MainPage mainPage;
     public RegistrationPage registrationPage;
