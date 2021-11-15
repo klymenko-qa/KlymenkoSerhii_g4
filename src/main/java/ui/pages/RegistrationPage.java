@@ -1,10 +1,8 @@
 package ui.pages;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.ui.Select;
 
 public class RegistrationPage extends MainPage{
 
@@ -113,32 +111,26 @@ public class RegistrationPage extends MainPage{
     }
 
     public void inputCity(String city) {
-        cityField.clear();
-        cityField.sendKeys(city);
+        webElements.inputText(cityField, city);
     }
 
-    public void selectState(int index) {
-        Select select = new Select(
-                webDriver.findElement(By.xpath("//select[@id='id_state']")));
-        select.selectByIndex(index);
+    public void selectState(String text) {
+        webElements.selectTextInDropDownByText(stateSelect, text);
     }
 
     public void inputPostCode(String postCode) {
-        postCodeField.clear();
-        postCodeField.sendKeys(postCode);
+        webElements.inputText(postCodeField, postCode);
     }
 
     public void inputMobilePhone(String phone) {
-        phoneMobile.clear();
-        phoneMobile.sendKeys(phone);
+        webElements.inputText(phoneMobile, phone);
     }
 
     public void inputAliasAddress(String alias) {
-        aliasField.clear();
-        aliasField.sendKeys(alias);
+        webElements.inputText(aliasField, alias);
     }
 
     public void clickToButtonSubmitAccount() {
-        submitButtonAccount.click();
+        webElements.clickOnElement(submitButtonAccount);
     }
 }
