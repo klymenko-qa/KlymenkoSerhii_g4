@@ -8,6 +8,10 @@ public class SeleniumTestHW5 extends BaseTests {
 
     private final String RANDOM_EMAIL = faker.internet().emailAddress();
 
+    public SeleniumTestHW5(String browser) {
+        super(browser);
+    }
+
     @Test
     public void verifyErrorMessageTest() {
         mainPage.openUrl("http://automationpractice.com/");
