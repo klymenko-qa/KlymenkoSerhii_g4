@@ -45,7 +45,7 @@ public class BaseTests {
     @Parameterized.Parameters
     public static Collection testData() {
         return Arrays.asList(new Object[][]{
-//                {"chrome"},
+                {"chrome"},
                 {"firefox"}
         });
     }
@@ -73,10 +73,10 @@ public class BaseTests {
         webDriver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 
         File file = new File("");
-        pathToScreenShot = file.getAbsolutePath() + "screenShot" + "-" +
-                this.getClass().getPackage().getName() +
+        pathToScreenShot = file.getAbsolutePath() + "\\screenShot" + "-" +
+                this.getClass().getPackage().getName() + "\\" +
                 this.getClass().getSimpleName() +
-                this.testName.getMethodName() + "-" + browser + ".png";
+                "\\" + this.testName.getMethodName() + "-" + browser + ".png";
 
         initPages();
     }
