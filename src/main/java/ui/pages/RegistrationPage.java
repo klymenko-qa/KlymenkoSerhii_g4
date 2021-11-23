@@ -1,26 +1,21 @@
 package ui.pages;
 
+import model.Account;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-public class RegistrationPage extends MainPage{
+public class RegistrationPage extends MainPage {
 
     public RegistrationPage(WebDriver webDriver) {
         super(webDriver);
     }
 
-    @FindBy(xpath = "//input[@id='email_create']")
-    public WebElement login;
+    @FindBy(xpath = "//div[@class='radio-inline'][1]")
+    public WebElement genderMr;
 
-    @FindBy(id = "SubmitCreate")
-    public WebElement submitButtonCreate;
-
-    @FindBy(xpath = "//h1[@class='page-heading']")
-    public WebElement titleCreateAnAccount;
-
-    @FindBy(xpath = "//h3[contains(text(),'Your personal information')]")
-    public WebElement titleYPI;
+    @FindBy(xpath = "//div[@class='radio-inline'][2]")
+    public WebElement genderMrs;
 
     @FindBy(id = "customer_firstname")
     public WebElement customerFirstNameField;
@@ -33,6 +28,15 @@ public class RegistrationPage extends MainPage{
 
     @FindBy(id = "passwd")
     public WebElement passwordField;
+
+    @FindBy(id = "days")
+    public WebElement daysInDropDown;
+
+    @FindBy(id = "months")
+    public WebElement monthsInDropDown;
+
+    @FindBy(id = "years")
+    public WebElement yearsInDropDown;
 
     @FindBy(xpath = "//h3[contains(text(),'Your address')]")
     public WebElement titleYourAddress;
@@ -67,22 +71,12 @@ public class RegistrationPage extends MainPage{
     @FindBy(id = "submitAccount")
     public WebElement submitButtonAccount;
 
-    @FindBy(xpath = "//div[@class='alert alert-danger']")
-    public WebElement errorMessage;
-
-    /**
-     * Method click to SingIn page
-     * */
-    public void openSignInPage() {
-        openUrl("http://automationpractice.com/index.php?controller=authentication&back=my-account");
-    }
-
-    public void inputEmailCreate(String email) {
-        webElements.inputText(login, email);
-    }
-
-    public void submitButtonCreate() {
-        webElements.clickOnElement(submitButtonCreate);
+    public void selectGender(String gender) {
+        if (gender.equals("Mr.")) {
+            webElements.clickRadioButton(genderMr, gender);
+        } else {
+            webElements.clickRadioButton(genderMrs, gender);
+        }
     }
 
     public void inputCustomerFN(String firstName) {
@@ -100,6 +94,19 @@ public class RegistrationPage extends MainPage{
     public void inputPassword(String password) {
         webElements.inputText(passwordField, password);
     }
+
+    public void selectBirthday(String day) {
+        webElements.selectValueInDropDown(daysInDropDown, day);
+    }
+
+    public void selectMonth(String month) {
+        webElements.selectValueInDropDown(monthsInDropDown, month);
+    }
+
+    public void selectYear(String year) {
+        webElements.selectValueInDropDown(yearsInDropDown, year);
+    }
+
 
     public void inputFirstName(String fistName) {
         webElements.inputText(fistNameField, fistName);
@@ -121,6 +128,10 @@ public class RegistrationPage extends MainPage{
         webElements.selectTextInDropDownByText(stateSelect, text);
     }
 
+    public void selectCountry(String text) {
+        webElements.selectTextInDropDownByText(countryField, text);
+    }
+
     public void inputPostCode(String postCode) {
         webElements.inputText(postCodeField, postCode);
     }
@@ -130,6 +141,8 @@ public class RegistrationPage extends MainPage{
     }
 
     public void inputAliasAddress(String alias) {
+        aliasField.clear();
+        aliasField.sendKeys(alias);
         webElements.inputText(aliasField, alias);
     }
 
@@ -137,7 +150,24 @@ public class RegistrationPage extends MainPage{
         webElements.clickOnElement(submitButtonAccount);
     }
 
-    public String checkErrorMessage() {
-        return errorMessage.getText();
+    public RegistrationPage registrationNewUser(Account account) {
+        selectGender(account.getGender());
+        inputCustomerFN(account.getFirstCustomerName());
+        inputCustomerLN(account.getLastCustomerName());
+        inputEmail(account.getEmail());
+        inputPassword(account.getPassword());
+        selectBirthday(account.getDay());
+        selectMonth(account.getMonth());
+        selectYear(account.getYear());
+        inputFirstName(account.getFistName());
+        inputLastName(account.getLastName());
+        inputStreet(account.getAddress1());
+        inputCity(account.getCity());
+        selectState(account.getState());
+        inputPostCode(account.getPostCode());
+        selectCountry(account.getCountry());
+        inputMobilePhone(account.getPhoneNumber());
+        inputAliasAddress(account.getAlias());
+        return this;
     }
 }

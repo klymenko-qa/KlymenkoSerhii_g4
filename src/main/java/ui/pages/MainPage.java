@@ -1,12 +1,13 @@
 package ui.pages;
 
+import io.qameta.allure.Step;
 import libs.WebElements;
 import org.apache.log4j.Logger;
-import org.junit.Assert;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.testng.Assert;
 
 public class MainPage {
 
@@ -29,6 +30,7 @@ public class MainPage {
      *
      * @param url
      * */
+    @Step("Open url {url}")
     public void openUrl(String url) {
         try {
             webDriver.get(url);
@@ -38,6 +40,7 @@ public class MainPage {
         }
     }
 
+    @Step("Check to SignIn page")
     public void clickToSignInPage() {
         signInLink.click();
     }
