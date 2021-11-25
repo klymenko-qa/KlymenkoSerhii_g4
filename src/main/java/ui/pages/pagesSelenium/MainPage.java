@@ -1,4 +1,4 @@
-package ui.pages;
+package ui.pages.pagesSelenium;
 
 import io.qameta.allure.Step;
 import libs.WebElements;
