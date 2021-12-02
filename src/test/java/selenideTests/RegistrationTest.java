@@ -33,4 +33,9 @@ public class RegistrationTest extends BaseTest {
         Assert.assertEquals(myAccountPage.getAccountName(),
                 userAccount.getFirstCustomerName() + " " + userAccount.getLastCustomerName());
     }
+
+    @Test
+    public void testFindProduct() {
+        mainPage.getProduct("Blouse").clickToProduct("Blouse");
+    }
 }
