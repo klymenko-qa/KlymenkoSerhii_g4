@@ -9,6 +9,7 @@ import com.codeborne.selenide.testng.annotations.Report;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.remote.DesiredCapabilities;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Listeners;
@@ -28,6 +29,7 @@ public class BaseTest {
     public RegistrationPage registrationPage = new RegistrationPage();
     public MyAccountPage myAccountPage = new MyAccountPage();
     public SignInPage signInPage = new SignInPage();
+    SelenoidWebDriverProvider selenoidWebDriverProvider = new SelenoidWebDriverProvider();
 
     public void setUpBrowser() {
         ChromeOptions options = new ChromeOptions();
@@ -42,15 +44,34 @@ public class BaseTest {
 
     @BeforeClass
     public void setUp() {
-        WebDriverManager.chromedriver().browserVersion("95").setup();
-        Configuration.browser = "chrome";
-        Configuration.timeout = 10000;
-        Configuration.baseUrl = "http://automationpractice.com";
-        Configuration.screenshots = true;
-        Configuration.savePageSource = true;
-        Configuration.reopenBrowserOnFail = true;
-        setUpBrowser();
-        Selenide.open(Configuration.baseUrl);
+        final String RUN_TYPE = "remote";
+        switch (RUN_TYPE) {
+            case ("local"):
+                WebDriverManager.chromedriver().browserVersion("95").setup();
+                Configuration.browser = "chrome";
+                Configuration.timeout = 10000;
+                Configuration.baseUrl = "http://automationpractice.com";
+                Configuration.screenshots = true;
+                Configuration.savePageSource = true;
+                Configuration.reopenBrowserOnFail = true;
+                setUpBrowser();
+                Selenide.open(Configuration.baseUrl);
+                break;
+            case ("remote"):
+                Configuration.remote = "http://localhost:4444/wd/hub";
+                Configuration.browserSize = "1920x1080";
+                DesiredCapabilities capabilities = new DesiredCapabilities();
+                capabilities.setCapability("browserName", "chrome");
+                capabilities.setCapability("browserVersion", "91.0");
+                capabilities.setCapability("platform", "LINUX");
+                capabilities.setCapability("enableVNC", true);
+                capabilities.setCapability("enableVideo", true);
+                capabilities.setCapability("enableLog", true);
+                Configuration.browserCapabilities = capabilities;
+                Selenide.open("http://automationpractice.com");
+//                WebDriverRunner.setWebDriver(selenoidWebDriverProvider.createDriver(capabilities));
+                break;
+        }
     }
 
     @AfterClass

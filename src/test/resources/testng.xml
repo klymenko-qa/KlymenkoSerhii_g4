@@ -27,4 +27,10 @@
         </parameter>
     </test>
 
+    <test name="Api" verbose="1" parallel="true">
+        <classes>
+            <class name="apiTests.HumanTests"/>
+        </classes>
+    </test>
+
 </suite>
